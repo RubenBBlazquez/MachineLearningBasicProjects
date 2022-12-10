@@ -5,17 +5,11 @@ import pandas as pd
 
 if __name__ == '__main__':
     x, y = datasets.load_diabetes(return_X_y=True, scaled=False)
-    print(x.shape)
-    print('---------------      ---------------')
-    print(x[0])
-    print('------------------------------')
-    print('------------------------------')
-    print(datasets.load_diabetes()['target'])
-    print('------------------------------')
-    x = x[:, np.newaxis, 2]
+    print(x)
+    x = x[:, np.newaxis, 2]  # we reshape x with elements from third column on x
+    print(x)
 
     X_train, X_test, y_train, y_test = model_selection.train_test_split(x, y, test_size=0.4, random_state=0)
-    print(type(X_train))
 
     model = linear_model.LinearRegression()
     model.fit(X_train, y_train)
@@ -27,4 +21,3 @@ if __name__ == '__main__':
     plt.ylabel('Disease Progression')
     plt.title('A Graph Plot Showing Diabetes Progression agains BMI')
     plt.show()
-
