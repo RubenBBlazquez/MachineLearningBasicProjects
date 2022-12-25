@@ -21,3 +21,17 @@ if __name__ == '__main__':
     plt.ylabel('Disease Progression')
     plt.title('A Graph Plot Showing Diabetes Progression agains BMI')
     plt.show()
+
+    # Generate 100 random values with a shape parameter of 2
+    data = np.random.pareto(2, 100)
+    # Plot the distribution of the data
+    plt.hist(data)
+
+    # Show the plot
+    plt.show()
+
+    data = np.random.pareto(1, 100)
+
+    # Plot the distribution of the data
+    plt.hist(data)
+    plt.show()
