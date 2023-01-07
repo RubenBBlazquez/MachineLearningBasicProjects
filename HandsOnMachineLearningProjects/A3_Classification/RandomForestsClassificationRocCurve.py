@@ -3,7 +3,7 @@ from matplotlib import patches
 from sklearn.datasets import fetch_openml
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import SGDClassifier
-from sklearn.metrics import roc_curve, precision_recall_curve, roc_auc_score
+from sklearn.metrics import roc_curve, precision_recall_curve, roc_auc_score, f1_score
 from sklearn.model_selection import cross_val_predict
 
 if __name__ == '__main__':
@@ -59,13 +59,18 @@ if __name__ == '__main__':
 
     # now we plot the last pr_curve and this forest pr_curve
     # since the seconds column is the positive probabilities, que take that
-    y_scores_forest = y_proba_forest.iloc[:, 1]
+    y_scores_forest = y_proba_forest[:, 1]
 
     precision_forest, recall_forests, thresholds_forest = precision_recall_curve(y_train_5, y_scores_forest)
     plt.plot(recall_forests, precision_forest, 'b--', linewidth=2, label="Random Forests")
-    plt.plot(recalls, precisions, 'g--', linewidth=2, label="Random Forests")
+    plt.plot(recalls, precisions, 'g-', linewidth=2, label="SGD Classifier")
     plt.grid()
     plt.xlabel('Recalls')
     plt.ylabel('Precisions')
     plt.legend()
     plt.show()
+
+    y_train_pred_forest = y_proba_forest[:, 1] >= 0.5  # positive proba ≥ 50% = TRUE
+
+    print('Random Forest: F1Score: ',
+          f1_score(y_train_5, y_train_pred_forest), ' RocAucScore:', roc_auc_score(y_train_5, y_scores_forest))

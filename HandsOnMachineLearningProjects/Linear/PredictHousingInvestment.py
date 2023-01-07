@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     best_correlation_attributes = ['median_house_value', 'median_income', 'total_rooms', 'housing_median_age']
     scatter_matrix(housing[best_correlation_attributes], figsize=(20, 10), grid=True)
-    # plt.show()
+    plt.show()
 
     housing.plot(kind='scatter', x='median_income', y='median_house_value')
     # plt.show()
@@ -266,7 +266,7 @@ if __name__ == '__main__':
 
     # model determination
     tree_rmse = mean_squared_error(housing_labeled, predictions, squared=False)
-    print(tree_rmse)  # this produces an overfitting (its remember data used when we trained the model )
+    print(11, tree_rmse)  # this produces an overfitting (its remember data used when we trained the model )
 
     # we use this method to create 10 folds to validate the model and compare 9 to 1 with each fold
     tree_rmses = -cross_val_score(tree_reg, housing, housing_labeled, scoring='neg_root_mean_squared_error', cv=10)
