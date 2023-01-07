@@ -3,7 +3,7 @@ from matplotlib import patches
 from sklearn.datasets import fetch_openml
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import SGDClassifier
-from sklearn.metrics import roc_curve, precision_recall_curve, roc_auc_score, f1_score
+from sklearn.metrics import roc_curve, precision_recall_curve, roc_auc_score, f1_score, recall_score
 from sklearn.model_selection import cross_val_predict
 
 if __name__ == '__main__':
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     # we do less equal instead of greater equal because roc_curve returns thresholds
     # from greater to lower
-    idx_for_threshold_at_90 = (thresholds <= thresholds[idx_threshold_precision_90]).argmax()
+    idx_for_threshold_at_90 = (thresholds_roc_curve <= thresholds[idx_threshold_precision_90]).argmax()
     tpr_90, fpr_90 = false_positive_rate[idx_for_threshold_at_90], true_positive_rate[idx_for_threshold_at_90]
 
     plt.plot(false_positive_rate, true_positive_rate, linewidth=2, label='ROC Curve')
@@ -70,7 +70,14 @@ if __name__ == '__main__':
     plt.legend()
     plt.show()
 
+    # we do less equal because recalls in randomForest are sorted from greater to less, so if we want to take recall
+    # of 45% if we do > always we take 1 , so we do <= to take the correct recall
+    threshold_recall_90_idx = (recall_forests <= 0.5).argmax()
+    print(thresholds_forest[threshold_recall_90_idx])
+
     y_train_pred_forest = y_proba_forest[:, 1] >= 0.5  # positive proba ≥ 50% = TRUE
 
-    print('Random Forest: F1Score: ',
-          f1_score(y_train_5, y_train_pred_forest), ' RocAucScore:', roc_auc_score(y_train_5, y_scores_forest))
+    print('Random Forest: F1Score: ', f1_score(y_train_5, y_train_pred_forest),
+          ', Random Forest Recall Score',
+          recall_score(y_train_5, y_proba_forest[:, 1] >= thresholds_forest[threshold_recall_90_idx]),
+          ' RocAucScore:', roc_auc_score(y_train_5, y_scores_forest))
