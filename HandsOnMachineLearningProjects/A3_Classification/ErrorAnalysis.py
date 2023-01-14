@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from sklearn.datasets import fetch_openml
 from sklearn.linear_model import SGDClassifier
-from sklearn.metrics import ConfusionMatrixDisplay, mean_squared_error
+from sklearn.metrics import ConfusionMatrixDisplay, mean_squared_error, f1_score
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import StandardScaler
@@ -33,9 +33,11 @@ if __name__ == '__main__':
     scaler = StandardScaler()
     x_train_scaled = scaler.fit_transform(x_train.astype('float64'))
     predict = cross_val_predict(sgd_classifier, x_train_scaled, y_train, cv=3, n_jobs=-1)
-    print('Cross_Val_Predict With Scaling: ', mean_squared_error(y_train, predict))
 
     ConfusionMatrixDisplay.from_predictions(y_train, predict)
+    plt.show()
+
+    ConfusionMatrixDisplay.from_predictions(y_train, predict, normalize="true", values_format='.0%')
     plt.show()
 
 

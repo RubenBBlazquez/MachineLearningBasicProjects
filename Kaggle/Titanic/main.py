@@ -99,7 +99,7 @@ if __name__ == '__main__':
 
     print(cross_val_score(sgd_classifier, scaled_inputs, values_to_predict, cv=10, n_jobs=-1).mean())
     print(cross_val_score(forest_classifier, scaled_inputs, values_to_predict, cv=10, n_jobs=-1).mean())
-    print(cross_val_score(log_reg, scaled_inputs, values_to_predict, cv=10, n_jobs=-1).mean())
+    print(cross_val_score(log_reg, scaled_inputs, values_to_predict, cv=10, n_jobs=-1,scoring='accuracy').mean())
 
 
     submission = pd.DataFrame({'PassengerId': titanic_dataframe_test['PassengerId'], 'Survived': predictions})
