@@ -37,8 +37,13 @@ if __name__ == '__main__':
     ConfusionMatrixDisplay.from_predictions(y_train, predict)
     plt.show()
 
+    print('confusion matrix without normalization done!!')
+
     ConfusionMatrixDisplay.from_predictions(y_train, predict, normalize="true", values_format='.0%')
     plt.show()
+
+    print('confusion matrix with normalization done!!')
+
 
 
 
