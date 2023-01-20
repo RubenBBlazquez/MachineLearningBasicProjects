@@ -12,11 +12,8 @@ if __name__ == '__main__':
 
     print(x.shape, y.shape)
 
-    some_digit = x[0]
+    some_digit = x[4]
     some_false_digit = x[5]
-
-    print(y[0])
-    print(y[5])
 
     x_train, x_test, y_train, y_test = x[:60000], x[60000:], y[:60000], y[60000:]
 
@@ -36,6 +33,7 @@ if __name__ == '__main__':
 
     print(f1_score(y_multilabel, y_train_knn_pred, average='macro'))
 
+    # by default SVC doesn't have the ability to do a multilabel classifier, so we use chainClassifier
     chain_clf = ClassifierChain(SVC(), cv=3, random_state=42)
     chain_clf.fit(x_train[:2000], y_multilabel[:2000])
 
