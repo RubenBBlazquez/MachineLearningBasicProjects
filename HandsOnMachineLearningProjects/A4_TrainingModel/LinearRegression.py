@@ -7,13 +7,13 @@ if __name__ == '__main__':
     np.random.seed(42)
     m = 100
     x = 2 * np.random.rand(m, 1)
-    y = 4 + 3 * x + np.random.randn(m, 1)
+    y = 4 + 3 * x**3 + np.random.randn(m, 1)
 
     plt.scatter(x, y)
 
     x_b = add_dummy_feature(x)
 
-    # now we calculate the normal equation < (XT * X)-1 * XT * Y >, we use @ to multiply matrix's
+    # now we calculate the normal equation "(XT * X)-1 * XT * Y", we use @ to multiply matrix's
     theta_best = np.linalg.inv(x_b.T @ x_b) @ x_b.T @ y
     print('theta best from formula of normal equation: ', theta_best)
 
@@ -43,5 +43,4 @@ if __name__ == '__main__':
     # you cant use normal equation to get the best theta because have a singular matrix
     # or m < n, so in that cases we can use this pseudo-inverse to get the equation
     theta_best_pinv = np.linalg.pinv(x_b) @ y
-
 
