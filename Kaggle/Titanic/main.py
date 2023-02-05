@@ -74,6 +74,8 @@ if __name__ == '__main__':
     x_train, x_text, y_train, y_test = train_test_split(titanic_dataframe_train, values_to_predict, random_state=42,
                                                         train_size=0.80)
 
+    print(111, type(x_train))
+
     x_train.reset_index(inplace=True)
     x_train.drop('index', axis=1, inplace=True)
     preprocessing = PreProcessTitanicDataframe(titanic_dataframe_train)

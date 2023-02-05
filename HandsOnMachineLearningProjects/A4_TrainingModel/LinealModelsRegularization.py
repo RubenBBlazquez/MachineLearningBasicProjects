@@ -79,7 +79,8 @@ if __name__ == '__main__':
     plt.title('Ridge Cholesky Model Polynomial')
     plt.show()
 
-    # Using stochastic gradient descent with SGD Regressor
+    # Using stochastic gradient descent with SGD Regressor,
+    # we set penalty = l2 to use the same method as Ridge
     sgd_reg = SGDRegressor(penalty='l2', alpha=0.1/m, tol=None, max_iter=1000, eta0=0.01, random_state=42)
 
     polynomial = make_pipeline(PolynomialFeatures(degree=2, include_bias=False), StandardScaler(), sgd_reg)
