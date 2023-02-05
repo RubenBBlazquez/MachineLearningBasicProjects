@@ -51,6 +51,7 @@ if __name__ == '__main__':
 
     sgd_classifier = SGDClassifier(random_state=42)
     sgd_classifier.fit(x_train[:2000], y_train[:2000])
+
     print('\n--- SGD WITH OVR CLASSIFIER ---')
     print(sgd_classifier.predict([some_digit]))
     sgd_scores = sgd_classifier.decision_function([some_digit])
