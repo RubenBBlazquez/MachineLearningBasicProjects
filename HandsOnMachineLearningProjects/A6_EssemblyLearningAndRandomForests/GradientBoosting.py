@@ -3,7 +3,6 @@ from matplotlib import pyplot as plt
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.tree import DecisionTreeRegressor
 
-
 def plot_predictions(regressors, X, y, axes, style, label=None, data_style="b.", data_label=None):
     x1 = np.linspace(axes[0], axes[1], 500)
     y_pred = sum(regressor.predict(x1.reshape(-1, 1)) for regressor in regressors)
