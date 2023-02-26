@@ -33,7 +33,7 @@ if __name__ == '__main__':
     print(housing_labeled)
     print(housing.describe())
 
-    customKmeansClustering = ClusterSimilarity(n_cluster=2, gamma=1, random_state=42)
+    customKmeansClustering = ClusterSimilarity(n_clusters=5, gamma=1, random_state=42)
     similarities = customKmeansClustering.fit_transform(housing[['latitude', 'longitude']],
                                                         sample_weight=housing_labeled)
     print(similarities[:3].round(2))
@@ -55,4 +55,5 @@ if __name__ == '__main__':
              linestyle="", color="black", marker="X", markersize=20,
              label="Cluster centers")
     plt.legend(loc="upper right")
+    plt.savefig('../Figures/latitudeLongitudeHousingAfinities.png')
     plt.show()
