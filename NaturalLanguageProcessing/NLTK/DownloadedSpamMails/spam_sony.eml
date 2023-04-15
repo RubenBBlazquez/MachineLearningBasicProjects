@@ -1,0 +1,402 @@
+Delivered-To: rubenbarroso16@gmail.com
+Received: by 2002:a92:dc0d:0:b0:317:9cbd:106d with SMTP id t13csp375729iln;
+        Fri, 24 Mar 2023 01:03:21 -0700 (PDT)
+X-Google-Smtp-Source: AKy350adpP30p6FYvMBt09w7LP2z/vXc12GT0w+8cF8cj1IaFHOZM/n8HgQSW9j8Kw2zY0s26kzj
+X-Received: by 2002:ad4:5d42:0:b0:5ca:23c3:986f with SMTP id jk2-20020ad45d42000000b005ca23c3986fmr3487429qvb.4.1679645001277;
+        Fri, 24 Mar 2023 01:03:21 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1679645001; cv=none;
+        d=google.com; s=arc-20160816;
+        b=z7cOgMedvMPuYLuU+fEhFsyD22E17LFGfCEbj3ovmHmKzzRbFFFMgM2AqL67DhjQmj
+         nZDTHlsKL9aLpScKyMfKZ0TvjqamJs/5adFFJk2xzE9UfE40GFM/vlyTGgxORwB6fsrI
+         N0g8BEPS8Q+ftHpvLgZpomQXTWAeAMPznkLWBSkzVU4pNLDHyai2xsuCbFq740lkmEHK
+         MV2EcafWGfT9bbKgk+3ZXT/H6g/qHFcSep8FCIG2FaxTlzQKrASuQ8uxwZjE0PodPJM6
+         dnt5ORQSpg27j1Ioyr4oOQH6KRi8tCTxiogSuiWeNJMLT09nkFsqmyG3iHDMg1MqlROF
+         w/UA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:message-id:list-id:reply-to:mime-version
+         :list-unsubscribe-post:list-unsubscribe:date:subject:to:from
+         :dkim-signature;
+        bh=ksf30hR4YNs4xjEQm/ZbT5z8DLiNRPCWvyp0lgs5miE=;
+        b=WX5NduACw/Dy202kd1UdqM2uKOTLiwKvm+out1siW5VPdlLGiLQwjwA6AyinWAfs2G
+         Q/vtVY940kQOUTYPnpJNj2NumJ+RZfFXGrSk8DjZIMWsfiYCwGeLvg6SOB9tCiGH3WcA
+         imHCmcVHrfOa97lbhknc5wA2yAKN2mkexebHU1iIUd5IDFXDviAepWNbEbn3ZST6X8b4
+         fA4KtcNAPf8RSgmh+GNg+f4p9q2HK+BdsG8hdtnYI254mRTZKFAqKYMTM74uO2BbyA3R
+         nelAyanXUQ11O51h0Bu1VhMzmraQS9EMEPyGEz4THx/eLxE6At5CDbQxlnBKtEo151F7
+         lWpg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@email.sonypictures.com.es header.s=200608 header.b="HYtZ/ytA";
+       spf=pass (google.com: domain of bounce-29_html-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es designates 136.147.184.252 as permitted sender) smtp.mailfrom=bounce-29_HTML-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es
+Return-Path: <bounce-29_HTML-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es>
+Received: from mta.email.sonypictures.com.es (mta.email.sonypictures.com.es. [136.147.184.252])
+        by mx.google.com with ESMTPS id c138-20020a379a90000000b0074680a73e0dsi8611718qke.303.2023.03.24.01.03.20
+        for <rubenbarroso16@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Mar 2023 01:03:21 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounce-29_html-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es designates 136.147.184.252 as permitted sender) client-ip=136.147.184.252;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@email.sonypictures.com.es header.s=200608 header.b="HYtZ/ytA";
+       spf=pass (google.com: domain of bounce-29_html-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es designates 136.147.184.252 as permitted sender) smtp.mailfrom=bounce-29_HTML-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=200608; d=email.sonypictures.com.es;
+ h=From:To:Subject:Date:List-Unsubscribe:List-Unsubscribe-Post:MIME-Version:
+ Reply-To:List-ID:X-CSA-Complaints:Message-ID:Content-Type;
+ i=news@email.sonypictures.com.es;
+ bh=ksf30hR4YNs4xjEQm/ZbT5z8DLiNRPCWvyp0lgs5miE=;
+ b=HYtZ/ytA3FdJFDQXeJwLvn34WBdeV4hUW3PQRsrkoY/TByYEvIDCVKiX1obgRsY678z1W+4EaIfO
+   NWPL8uRSqDVGcxbRWxZv5e2Wcvmkmh9pOtezqMDLqvqKYyNXspZOUN4cfs6Or3ikWhI4a6AjJVIA
+   dhvbi/YJGxzQ/dQDQpk=
+Received: by mta.email.sonypictures.com.es id h3lcki2fmd4v for <rubenbarroso16@gmail.com>; Fri, 24 Mar 2023 08:00:58 +0000 (envelope-from <bounce-29_HTML-106604498-770664-6424969-6010@bounce.email.sonypictures.com.es>)
+From: "Sony Pictures Spain" <news@email.sonypictures.com.es>
+To: <rubenbarroso16@gmail.com>
+Subject: =?UTF-8?Q?Vive_la_experiencia_prehist=C3=B3rica_y_=C2=A1participa?=
+ =?UTF-8?Q?_en_el_sorteo_de_unas_gafas_PlayStation_VR2!_#65LaPel=C3=ADcula?=
+ =?UTF-8?Q?,_hoy_en_cines?=
+Date: Fri, 24 Mar 2023 02:00:58 -0600
+List-Unsubscribe: <https://click.email.sonypictures.com.es/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiI2NDI0OTY5IiwicyI6IjEwNjYwNDQ5OCIsImxpZCI6IjI5IiwiaiI6Ijc3MDY2NCIsImpiIjoiNjAxMCIsImQiOiI2MDIxNyJ9.ouNqJ_fzPeqlgSDqPIsYqCXD9911WCNtsmYx0SnH3Ac>, <mailto:leave-fd8016791a3c402029-fe29157073620479711d78-fec1137775620279-fe87127477600d7b7c-ff3812707464@leave.email.sonypictures.com.es>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+x-CSA-Compliance-Source: SFMC
+MIME-Version: 1.0
+Reply-To: "Sony Pictures Releasing ES" <reply-fec1137775620279-29_HTML-106604498-6424969-6010@email.sonypictures.com.es>
+List-ID: <6383269.xt.local>
+X-CSA-Complaints: csa-complaints@eco.de
+X-SFMC-Stack: 6
+x-job: 6424969_770664
+Message-ID: <c46b7772-fbf2-4bef-90ca-468090ccc4b4@ind1s06mta1827.xt.local>
+Feedback-ID: 6424969:770664:136.147.184.252:sfmktgcld
+Content-Type: multipart/alternative;
+	boundary="nerqd1sStLZx=_?:"
+
+This is a multi-part message in MIME format.
+
+--nerqd1sStLZx=_?:
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+
+
+
+  
+ 
+
+ 
+Si no puedes visualizar correctamente este e-mail, pulsa 
+https://view.email.sonypictures.com.es/?qs=31a3235473f90075896789ba5c64a8166ee94f09fe93f99e152bbdb01ca3bca0d8bb6a0185f072f4a6382c1ee62c005ec7d714506b28a9efc772d014a3059cdcbb3e8d9ca7cc8e802f02fdc8d8e8c25f 
+aqui. 
+
+https://click.email.sonypictures.com.es/?qs=f1bac027010ff816ed46d137ca4f8e883e1502ed7e67cc0d60d64484ebb66ed806804c683ec9e22874bc0e5b624de93af519b703a0654215 
+
+
+https://click.email.sonypictures.com.es/?qs=f1bac027010ff8166a1c1f830917e5a079b42e9fa4065302b335bf90fa6317b0896b5720106f20d54d71a7ff43c8e2dd52147dd3917caca8 
+
+
+https://click.email.sonypictures.com.es/?qs=60312130a97a0a3473ebef015dfb3410455ee04ffbf64646e08f351ee0c38c4faeb04f2756d41f36449e22e08e39072f5290c8a8d35da198 
+
+
+Para ser eliminado de nuestra lista de correo, haz clic 
+https://cloud.email.sonypictures.com.es/oneclickunsubscribe/confirmunsubscribe?qs=2609fd61c82e33d28e7cd71176d0d6273db5a10e55cf36c3a33eb3425399e91ce2aa2a4ad402bb50a08202f0f6f4cc59&key=ES4b493e821d5346b284260d3e55299852 
+aqui .
+Para saber como manejamos tu informacion personal, lee nuestra 
+https://click.email.sonypictures.com.es/?qs=60312130a97a0a34a6ea7bcb2a208be481bdfd6aafad8f498316970437522075735b9f19b19deffe9dfd61f8c31f09155573e51f42ad8f9e 
+Politica de Privacidad.
+
+
+ Este correo electronico puede contener enlaces o anuncios relacionados con sitios de terceros. Sony Pictures Espana no es responsable de las pr&aacute;cticas de privacidad o el contenido de dichos otros sitios y recomienda leer las propias declaraciones de privacidad y terminos de uso cuando visites dichos sitios.
+
+
+ Este correo electronico fue enviado a rubenbarroso16@gmail.com por Sony Pictures Entertainment Iberia
+
+
+ Sony Pictures Entertainment Iberia, S.L.U.
+
+ Calle Pedro de Valdivia, 10
+
+ 28006 Madrid
+
+
+ (c) 2023 Sony Pictures Entertainment Iberia, S.L.U. All rights reserved. 
+
+
+ Este email fue generado autom&aacute;ticamente. Por favor, no respondas al mismo.
+
+
+ 
+ 
+
+
+  
+ 
+
+
+--nerqd1sStLZx=_?:
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style type="text/css">
+      ReadMsgBody{
+        width: 100%;
+      }
+      .ExternalClass {
+        width: 100%;
+      }
+      .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+        line-height: 100%;
+      }
+      body {
+        -webkit-text-size-adjust:100%;
+        -ms-text-size-adjust:100%;
+        margin:0 !important;
+      }
+      p {
+        margin: 1em 0;
+      }
+      table td {
+        border-collapse: collapse;
+      }
+      img {
+        outline:0;
+      }
+      a img {
+        border:none;
+      }
+      p {
+        margin: 1em 0;
+      }
+      @-ms-viewport{
+        width: device-width;
+      }
+    </style>
+    <style type="text/css">
+      @media only screen and (max-width: 480px) {
+        .container {
+          width: 100% !important;
+        }
+        .footer {
+          width:auto !important;
+          margin-left:0;
+        }
+        .content-padding{
+          padding:4px !important;
+        }
+        .mobile-hidden {
+          display:none !important;
+        }
+        .logo {
+          display:block !important;
+          padding:0 !important;
+        }
+        img {
+          max-width:100% !important;
+          height:auto !important;
+          max-height:auto !important;
+        }
+        .header img{
+          max-width:100% !important;
+          height:auto !important;
+          max-height:auto !important;
+        }
+        .photo img {
+          width:100% !important;
+          max-width:100% !important;
+          height:auto !important;
+        }
+        .drop {
+          display:block !important;
+          width: 100% !important;
+          float:left;
+          clear:both;
+        }
+        .footerlogo {
+          display:block !important;
+          width: 100% !important;
+          padding-top:15px;
+          float:left;
+          clear:both;
+        }
+        .nav4, .nav5, .nav6 {
+          display: none !important;
+        }
+        .tableBlock {
+          width:100% !important;
+        }
+        .responsive-td {
+          width:100% !important;
+          display:block !important;
+          padding:0 !important;
+        }
+        .fluid, .fluid-centered {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .fluid-centered {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        /* MOBILE GLOBAL STYLES - DO NOT CHANGE */
+        body {
+          padding: 0px !important;
+          font-size: 16px !important;
+          line-height: 150% !important;
+        }
+        h1 {
+          font-size: 22px !important;
+          line-height: normal !important;
+        }
+        h2 {
+          font-size: 20px !important;
+          line-height: normal !important;
+        }
+        h3 {
+          font-size: 18px !important;
+          line-height: normal !important;
+        }
+        .buttonstyles {
+          font-family:arial,helvetica,sans-serif !important;
+          font-size: 16px !important;
+          color: #FFFFFF !important;
+          padding: 10px !important;
+        }
+        /* END OF MOBILE GLOBAL STYLES - DO NOT CHANGE */
+      }
+      @media only screen and (max-width: 640px) {
+        .container {
+          width:100% !important;
+        }
+        .mobile-hidden {
+          display:none !important;
+        }
+        .logo {
+          display:block !important;
+          padding:0 !important;
+        }
+        .photo img {
+          width:100% !important;
+          height:auto !important;
+        }
+        .nav5, .nav6 {
+          display: none !important;
+        }
+        .fluid, .fluid-centered {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: auto !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .fluid-centered {
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+      }
+    </style>
+    <!--[if mso]> <style type="text/css"> /* Begin Outlook Font Fix */               body, table, td {                  font-family : arial, helvetica, sans-serif;                  line-height : 100%;                  font-size : 16px;                  color : #000000;               } /* End Outlook Font Fix */ </style> <![endif]-->
+  </head>
+  <body bgcolor="#FFFFFF" text="#000000" style="-webkit-text-size-adjust:none;background-color : #FFFFFF; font-family : arial, helvetica, sans-serif; line-height : 100%; font-size : 16px; color : #000000; padding : 20px; "><style type="text/css">
+div.preheader 
+{ display: none !important; } 
+</style>
+<div class="preheader" style="font-size: 1px; display: none !important;">Gana unas gafas PlayStation VR2</div>
+    <div style="font-size:0; line-height:0;">
+      <img src="https://click.email.sonypictures.com.es/open.aspx?ffcb10-fec1137775620279-fe271571726c017c7d1273-fe87127477600d7b7c-ff941679-fe29157073620479711d78-ff3812707464&d=60217&bmt=0" width="1" height="1" alt="">
+        
+        </div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+        <tr>
+          <td align="center" valign="top">
+             
+          </td>
+        </tr>
+        <tr>
+          <td align="center">
+            <table cellspacing="0" cellpadding="0" border="0" width="600" class="container" align="center">
+              <tr>
+                <td>
+                  <table class="tb_properties border_style" style="font-size : 16px; font-family : arial, helvetica, sans-serif; color : #000000;background-color : #000000; border : 0px solid transparent; line-height : 100%; " cellspacing="0" cellpadding="0" bgcolor="#000000" width="100%">
+                    <tr>
+                      <td align="center" valign="top">
+                        <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                          <tr>
+                            <!-- added padding here -->
+                            <td class="content_padding" style="padding : 0px 0px 0px 0px; ">
+                              <!-- end of comment -->
+                              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr> 
+                                  <!-- top slot -->
+                                  <td align="center" class="header" valign="top">
+                                    <table align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                      <tbody>
+                                        <tr>
+                                          <td align="left" valign="top">
+                                            <table cellspacing="0" cellpadding="0" style="width:100%">
+                                              <tbody>
+                                                <tr>
+                                                  <td class="responsive-td" valign="top" style="width: 100%;">
+                                                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><div style="text-align: center;">
+ <br>
+ <span style="font-size:9px;"><span style="font-family:arial,helvetica,sans-serif;">Si no puedes visualizar correctamente este e-mail, pulsa </span></span><span style="font-size:9px;"><span style="font-family:arial,helvetica,sans-serif;"><a href="https://view.email.sonypictures.com.es/?qs=31a3235473f90075896789ba5c64a8166ee94f09fe93f99e152bbdb01ca3bca0d8bb6a0185f072f4a6382c1ee62c005ec7d714506b28a9efc772d014a3059cdcbb3e8d9ca7cc8e802f02fdc8d8e8c25f">aqu&iacute;.</a></span></span></div></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0"><tr><td align="center">
+<a href="https://click.email.sonypictures.com.es/?qs=f1bac027010ff8165944e4cad085d520bdd93e1a951f984e2ffea718f1045d035602cc975af39223270e38c31437b775871c90dbf9d0e89a879506210e917b2b" title="Sony Pictures Entertainment"   data-linkto="http://"></a></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0" role="presentation"><tr><td align="center"><a href="https://click.email.sonypictures.com.es/?qs=f1bac027010ff81691568b18e976905d14f2dbca9bfc5087adca89e619d0c9ee8d7d9b6bc21ec7f79759f6f5711727fce959eeaac98e83b0306ddbd36517201d" title="Sony Pictures"   data-linkto="https://">
+<img data-assetid="167152" src="http://image.email.sonypictures.com.es/lib/fe87127477600d7b7c/m/1/899b7131-aae1-4eb6-99da-fd8d8a44cf13.png" alt="Sony Pictures" width="1200" style="display: block; padding: 0px; text-align: center; height: auto; width: 100%; border: 0px none transparent;"></a></td></tr></table></td></tr></table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table width="100%" cellspacing="0" cellpadding="0" role="presentation"><tr><td align="center"><a href="https://click.email.sonypictures.com.es/?qs=f1bac027010ff816f06c5700e4b7bdc8747270b102ee0239e190c9cc943c9ee963a45dfa4df9995a1d0e126299e5b720a113f08cbeb06a35" title="65- YA EN CINES Y PROMO VR"   data-linkto="https://">
+<img data-assetid="361995" src="https://image.email.sonypictures.com.es/lib/fe87127477600d7b7c/m/1/f8467b38-b916-4e1a-97f2-5c4250e312ff.jpg" alt="65 - YA EN CINES Y PROMO VR" width="600" style="display: block; padding: 0px; text-align: center; height: auto; width: 100%; border: 0px none transparent;"></a></td></tr></table></td></tr>
+</table><table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; " class="stylingblock-content-wrapper"><tr><td class="stylingblock-content-wrapper camarker-inner"><table role="presentation" style="background-color: #FFFFFF; min-width: 100%; " class="stylingblock-content-wrapper" width="100%" cellspacing="0" cellpadding="0"><tr><td style="padding: 0px; " class="stylingblock-content-wrapper camarker-inner"><p style="text-align:center;line-height:10.5pt" align="center">
+ <span style="font-size:10px;"><span style="font-family:arial,helvetica,sans-serif;"><span style="color:#696969;">Para ser eliminado de nuestra lista de correo, haz clic&nbsp;<u><a   data-linkto="https://" href="https://click.email.sonypictures.com.es/?qs=f1bac027010ff816cda45fd9c250422af2dedd994243aaa8c495e20622a796570317c99536dcad83e8f9c14aea5c25465521efa977ed73cf" style="color:#808080;text-decoration:none;" title="aquí">aqu&iacute;</a></u></span>.<br>
+ <span style="color:#696969;">Para saber c&oacute;mo manejamos tu informaci&oacute;n personal, lee nuestra&nbsp;</span><a   data-linkto="http://" href="https://click.email.sonypictures.com.es/?qs=f1bac027010ff8161feae18b1a100e374c1d63dd4aa22be5b815d76f396014a797eaca31b5a71c2df1bb654c71a0deeddd41d99a660de68c5b02f5a326ef2034" style="color:#808080;text-decoration:underline;" target="_blank" title="Privacy Policy"><span style="color:#696969;">Pol&iacute;tica de Privacidad</span></a><span style="color:#696969;">.<br>
+ <br>
+ Este correo electr&oacute;nico puede contener enlaces o anuncios relacionados con sitios de terceros. Sony Pictures Espa&ntilde;a no es responsable de las pr&aacute;cticas de privacidad o el contenido de dichos otros sitios y recomienda leer las propias declaraciones de privacidad y t&eacute;rminos de uso cuando visites dichos sitios.<br>
+ <br>
+ Este correo electr&oacute;nico fue enviado a&nbsp;<span style="line-height: 107%;">rubenbarroso16@gmail.com</span>&nbsp;por Sony Pictures Entertainment Iberia<br>
+ <br>
+ Sony Pictures Entertainment Iberia, S.L.U.<br>
+ Calle Pedro de Valdivia, 10<br>
+ 28006 Madrid<br>
+ <br>
+ &copy; 2023&nbsp;Sony Pictures Entertainment Iberia, S.L.U. All rights reserved.&nbsp;<br>
+ <br>
+ Este email fue generado autom&aacute;ticamente. Por favor, no respondas al mismo.</span></span></span><span style="font-size:7.5pt;font-family:&quot;Arial&quot;,sans-serif;color:#929292"><o:p></o:p></span></p></td></tr></table>
+                                                  
+                                                
+                                              
+                                            </td></tr></table>
+                                                    
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+             
+          </td>
+        </tr>
+      </table>
+      </body>
+    </html>
+
+--nerqd1sStLZx=_?:--
+

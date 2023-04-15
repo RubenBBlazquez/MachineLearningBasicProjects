@@ -9,3 +9,8 @@ beautifulsoup4
 requests
 seaborn
 deep-translator
+protobuf==3.20.0
+docx2txt
+html5lib
+spacy
+PyPDF2

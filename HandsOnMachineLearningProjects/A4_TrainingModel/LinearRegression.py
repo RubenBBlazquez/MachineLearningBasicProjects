@@ -18,7 +18,7 @@ if __name__ == '__main__':
     print('theta best from formula of normal equation: ', theta_best)
 
     # now we can make predictions using our best theta
-    x_new = np.array([[0], [2]])
+    x_new = np.array([[1], [2]])
     x_new_b = add_dummy_feature(x_new)
 
     y_predict = x_new_b @ theta_best

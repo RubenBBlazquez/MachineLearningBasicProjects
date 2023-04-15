@@ -1,0 +1,605 @@
+Delivered-To: rubenbarroso16@gmail.com
+Received: by 2002:a92:dc0d:0:b0:317:9cbd:106d with SMTP id t13csp1171442iln;
+        Mon, 20 Mar 2023 06:15:45 -0700 (PDT)
+X-Google-Smtp-Source: AK7set8/k/d+z/9IkPGF2GErLu572Ll3FM66nftYc4CPCCBng3kf9Yp9xfPGI0dHOCl5yxLSS6iJ
+X-Received: by 2002:a5d:6a46:0:b0:2cf:e688:2d7c with SMTP id t6-20020a5d6a46000000b002cfe6882d7cmr11983893wrw.33.1679318145526;
+        Mon, 20 Mar 2023 06:15:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1679318145; cv=none;
+        d=google.com; s=arc-20160816;
+        b=fxDbFuROiHYmL7uqSFcXURiy0Guuhiw77nNS413XcIgkCxRtxAFEMwbua19kiQxR3x
+         ++TnSLL5qpmdSuM2IDjVAQu4NPtvOoDn2WNVS6OPZ6/tKQjWxB9DIn6eCqOSmi3DQr3m
+         JMYUDNu7kjkR0Pb1sFpWTzB7x+TFAvXt/xZk8Q86aEnJwHQnrAQB9+BKZz/Rmyi1hhmk
+         YS2FkKqb1QVgp1m1mmFf0lh6Z2lOCIUbLokFaLCwA3G+N1Ul4Oukr5o8zsoO7TjHeoMP
+         WJL6KP4ctKWbQMR63i8gqtUjgi5QxXmy+QHGqti5VAS7YPhIxyY8zBw5hfrpPvdOnqNy
+         ptHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=list-unsubscribe:message-id:mime-version:reply-to:to:subject:date
+         :from:dkim-signature;
+        bh=8K0KhLylFPlAHZE7r3NdKdVnr20TtT2DB4kXMyYlTFg=;
+        b=MHJXvVYz+asFHGl73Rlj0NbgtodGxyYqMFUinkpy8cuqNS34Nf6OkUrRVpk+7lSaA/
+         xMTZee5hHZpPUTalSghec+2ouBsmrlY3/zKxzbfR0DDC8paDVy5vK+Q306cxtNQVi9WN
+         VIBoKZVrodrP7eIUpRvWndLuqX4xURIgM48Sl/kMIU28c92EIKV+Gqj1iM3BGeo8s9/T
+         5ekAo5hnniNjfLuSxV3Xj6bjWDbghRBfQeBIbuQEA+e5UT80q/7iI7EhcYNRkqr8icEd
+         A2pe/OhtR8rQ+v1j5Cs6wiyN4LqglfQXfO5QqPTEOBe22Ak33a+Y1OTaRWgGFPY0JXS3
+         4FYQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.eurail.com header.s=eurail header.b=aaTmtxsp;
+       spf=pass (google.com: domain of bounce@mail.eurail.com designates 130.248.153.9 as permitted sender) smtp.mailfrom=bounce@mail.eurail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=eurail.com
+Return-Path: <bounce@mail.eurail.com>
+Received: from r9.mail.eurail.com (r9.mail.eurail.com. [130.248.153.9])
+        by mx.google.com with ESMTPS id i6-20020a05600011c600b002c5509a830dsi8056426wrx.27.2023.03.20.06.15.45
+        for <rubenbarroso16@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Mar 2023 06:15:45 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounce@mail.eurail.com designates 130.248.153.9 as permitted sender) client-ip=130.248.153.9;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.eurail.com header.s=eurail header.b=aaTmtxsp;
+       spf=pass (google.com: domain of bounce@mail.eurail.com designates 130.248.153.9 as permitted sender) smtp.mailfrom=bounce@mail.eurail.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=eurail.com
+Return-Path: <bounce@mail.eurail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.eurail.com;
+	s=eurail; t=1679318144;
+	bh=8K0KhLylFPlAHZE7r3NdKdVnr20TtT2DB4kXMyYlTFg=;
+	h=From:Date:Subject:To:MIME-Version:Message-ID:List-Unsubscribe:
+	 Content-Type;
+	b=aaTmtxspoOL7iREtcTOP5rDuVwU9DF5F5briUX8cyS92+1taW7IJxtlSgelZiE6kV
+	 HOb4l7YWOt7n88oqKIEzwZ/fuydxcdneqt5w7/870U6y83Lps6KYww5xNh8FiLDSUB
+	 /DuojNavqHHT0jGUIsO7EJw0Vwdo3Sjpmwxjwdtk+nlkBVjhWC7yDuRX3fmS5HqThP
+	 m5I+7TIh8PcaEOHKUWGSZ9YdF2ZkQoj7GZvEeVF2wLmBE+X+nxJLLg0w/RNiGHs2IB
+	 0CLGu5GPh/5LIzRJEMEXaNu7ZTvAAiIoPju9aS9ke2N02VWyz1JEgddRn64GmG9o6s
+	 0PLfdCidEdLJw==
+X-MSFBL: CeKgP9bO6zXHwyLYcWEph/eHgLvtriAhQB8f4Q0pccU=|eyJyIjoicnViZW5iYXJ
+	yb3NvMTZAZ21haWwuY29tIiwiZyI6ImRlZmF1bHRfYzI0OTdiN2EtYmEyNC00ZTE
+	wLWE1MTYtODA3Y2UyMGJmMmJkIiwiYiI6ImF3c19ldXJhaWxfcHJvZDFfZGVmYXV
+	sdF9tb21lbnR1bTEwX210YTAwM18xMzAuMjQ4LjE1My45IiwicmNwdF9tZXRhIjp
+	7ICJpbiI6ICJldXJhaWxfbWt0X3Byb2QxIiwgInIiOiAicnViZW5iYXJyb3NvMTZ
+	AZ21haWwuY29tIiwgIm0iOiAiMTkzNzk0MjYwIiwgImQiOiAiOTY4OTAwMTYiLCA
+	iaSI6ICJGODMzMUQwODVDNTRERDREMEE0OTVDRkNAQWRvYmVPcmciIH19
+Received: from [10.98.212.163] ([10.98.212.163:36210] helo=r10.mail.eurail.com)
+	by momentum10.lon7.cpt.adobe.net (envelope-from <bounce@mail.eurail.com>)
+	(ecelerity 4.2.38.62370 r(:)) with ESMTP
+	id 45/AA-10953-08C58146; Mon, 20 Mar 2023 06:15:44 -0700
+From: "Eurail.com" <eurail@mail.eurail.com>
+Date: Mon, 20 Mar 2023 13:15:43 GMT
+Subject: =?utf-8?B?RGlzY292ZXJFVSBpcyBiYWNrICDwn5qCIEFwcGx5IGZvciBuZQ==?=
+ =?utf-8?B?dyBUcmF2ZWwgb3Bwb3J0dW5pdGllcyBub3c=?=
+To: <rubenbarroso16@gmail.com>
+Reply-To: "Eurail.com" <noreply@eurail.com>
+MIME-Version: 1.0
+X-mailer: nlserver, Build 7.0.0.10651
+Message-ID: <AC7000000000B8D10D405C66CA0eurail_mkt_prod1@mail.eurail.com>
+List-Unsubscribe: <mailto:bounce@mail.interrail.eu?subject=unsubscribe%3CAC7000000000B8D10D405C66CA0eurail_mkt_prod1@mail.eurail.com%3E>
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_827_E8B6CA02.E8B6CA02"
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_827_E8B6CA02.E8B6CA02
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Are you 18 and waiting to go on the Interrail trip=3F
+View in browser
+PASSES=C2=A0|=C2=A0OFFERS=C2=A0|=C2=A0PLAN YOUR TRIP=C2=A0|=C2=A0RESERVATIO=
+NS
+DISCOVER EUROPE FOR FREE
+Are you 18 and waiting to go on the Interrail trip you=E2=80=99ve always dr=
+eamed of=3F Now=E2=80=99s your chance! DiscoverEU is back with 35,000 free =
+rail passes up for grabs!
+                      
+
+The EU initiative gives young Europeans the opportunity to discover Europe =
+through learning experiences. All you have to do is apply by answering a 5-=
+question quiz about the EU as well as a subsidiary question. If you are sel=
+ected, you will receive a travel pass valid for up to 30 days to explore Eu=
+rope between 15 June 2023 and 30 September 2024.
+                    
+
+Note: to be eligible, you need to be a citizen of one of the EU Member Stat=
+es or Iceland, Liechtenstein, North Macedonia, Norway, Serbia or T=C3=BCrki=
+ye, or legally reside in one of those countries. And you need to be born be=
+tween 1 July 2004 and 30 June 2005.
+                    
+
+Applications will be open until Wednesday 29 March 2023, 12:00. Don=E2=80=
+=99t miss out! Visit the European Youth Portal to find out more.
+
+                    
+
+                    
+
+                    
+                    
+                      APPLY NOW
+                    
+                  
+You have received this email as we think it might be of use to you after br=
+owsing our website or placing an order with us. If you would prefer not to =
+receive similar communications in the future, please unsubscribe.
+Has recibido este correo electr=C3=B3nico porque pensamos que puede serte =
+=C3=BAtil despu=C3=A9s de haber navegado por nuestra p=C3=A1gina web o habe=
+r realizado un pedido con nosotros. Si prefieres no recibir comunicaciones =
+similares en el futuro, cancela la suscripci=C3=B3n.
+Hai ricevuto questa e-mail perch=C3=A9 riteniamo che potrebbe esserti utile=
+ dopo aver visitato il nostro sito web o aver effettuato un ordine con noi.=
+ Se non vuoi ricevere comunicazioni simili in futuro, annulla l&#39;iscrizi=
+one.
+Vous recevez cet e-mail parce qu&#39;il pourrait vous =C3=AAtre utile apr=
+=C3=A8s avoir consult=C3=A9 notre site Web ou pass=C3=A9 votre commande. Si=
+ vous pr=C3=A9f=C3=A9rez ne plus recevoir ce type de message, veuillez vous=
+ d=C3=A9sinscrire.
+Je ontvangt dit e-mailbericht omdat het nuXg voor je zou kunnen zijn na je =
+bezoek aan onze website of het plaatsen van een bestelling. Wil je in de to=
+ekomst geen soortgelijke berichten meer ontvangen, afmelden.
+Du hast diese E-Mail erhalten, weil sie dir vielleicht im Anschluss an die =
+Suche auf unserer Webseite oder einer Bestellung bei uns n=C3=BCtzlich sein=
+ kann. Wenn du k=C3=BCnftig lieber keine derartigen Nachrichten erhalten m=
+=C3=B6chtest, kannst du dich abmelden.
+View in browser
+Unsubscribe=C2=A0 | =C2=A0View in browser
+
+                      =C2=A0=C2=A0
+                      =C2=A0=C2=A0
+                      =C2=A0=C2=A0
+                      =C2=A0=C2=A0
+                      
+                    
+Customer Service
+interrail.eu
+P.O. Box 2338, 3500 Utrecht, The Netherlands
+
+------=_NextPart_827_E8B6CA02.E8B6CA02
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html>
+<html style=3D""><head><meta name=3D"content-version" content=3D"3.3.9"><ba=
+se href=3D"https://t.mail.eurail.com"/><meta name=3D"x-apple-disable-messag=
+e-reformatting"><meta name=3D"viewport" content=3D"width=3Ddevice-width,ini=
+tial-scale=3D1.0"><style data-name=3D"eurail-custom-font" type=3D"text/css"=
+>
+
+      @font-face {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 300;
+        src: url(https://fonts.gstatic.com/s/poppins/v19/pxiByp8kv8JHgFVrLD=
+z8Z1xlFQ.woff2) format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://fonts.gstatic.com/s/poppins/v19/pxiEyp8kv8JHgFVrJJ=
+fecg.woff2) format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Minion Pro';
+        font-style: normal;
+        font-weight: 400;
+        src: url(https://www.eurail.com/etc/designs/eurail/fonts/minion-pro=
+/MinionPro-Regular.woff2) format('woff2');
+      }
+
+    </style><style data-name=3D"eurail-custom" type=3D"text/css">
+      .colspan4 { width: 5% }
+      @media screen and (max-width: 500px){
+        .first {
+          border-radius: 5px 5px 0px 0px !important;
+        }
+        .last {
+          border-radius: 0px 0px 5px 5px !important;
+        }
+        .mobile-full {
+          border-radius: 0px 0px 0px 0px !important;
+        }
+        .button-container span {
+          max-width:85% !important;
+          display:inline-block !important;
+        }
+      }
+    </style><style data-name=3D"default" type=3D"text/css">body{font-family=
+:sans-serif;margin:0 !important;padding:0 !important;background:#FFFFFF;min=
+-width:750px;}td{padding:0;border-collapse:collapse;}th{font-weight:normal;=
+text-align:left;}.acr-fragment,.acr-component{padding:0;}.divider-container=
+{padding:5px 0;font-size:0px;}.text-container p{margin:0;}.image-container{=
+line-height:0;}.acr-tmp-component img,.image-container img{height:auto;}.bu=
+tton-container a{text-decoration:none;color:inherit;}.acr-structure{backgro=
+und-size:auto;background-repeat:no-repeat;}.structure__table{table-layout:f=
+ixed;margin:0 auto;border-spacing:0;background-size:auto;background-repeat:=
+no-repeat;mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;}=
+.colspan1,.colspan2,.colspan3,.colspan4,.colspan33,.colspan66{background-si=
+ze:auto;background-repeat:no-repeat;box-sizing:border-box;}.colspan1{width:=
+100%;}.colspan2{width:50%;}.colspan3{width:75%;}.colspan4{width:25%;}.colsp=
+an33{width:33%;}.colspan66{width:66%;}.component-social-container{width:100=
+%;text-align:center;}span.preheader{display:none !important;visibility:hidd=
+en;mso-hide:all;opacity:0;}.ExternalClass{width:100%;}.ExternalClass,.Exter=
+nalClass p,.ExternalClass span,.ExternalClass font,.ExternalClass td,.Exter=
+nalClass div{line-height:100%;}h1,h2,h3,h4,h5{display:block;font-weight:bol=
+d;}h1{font-size:24px;margin:19px 0 19px 0;}h2{font-size:24px;margin:20px 0 =
+20px 0;}h3{font-size:19px;margin:19px 0 19px 0;}h4{font-size:16px;margin:21=
+px 0 21px 0;}h5{font-size:13px;margin:22px 0 22px 0;}h6{font-size:11px;marg=
+in:25px 0 25px 0;}.mso-is-desktop-hidden,.mso-is-desktop-hidden table{mso-h=
+ide:all;}@media screen and (min-width: 500px){.is-desktop-hidden{display:no=
+ne !important;}}</style><style data-name=3D"custom" type=3D"text/css">body{=
+min-width:600px;}#acr-17225950,body{background-color:rgb(241,241,241)!impor=
+tant;}li{margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #ed=
+eded;}</style><style data-name=3D"media-default-max-width-500px" type=3D"te=
+xt/css">@media screen and (max-width: 500px){body{width:100% !important;min=
+-width:0px !important;}.structure__table{width:100%;}.colspan1,.colspan2,.c=
+olspan3,.colspan4,.colspan33,.colspan66,.colspan-n{display:block !important=
+;min-width:100%;}.container-small-size .colspan1,.container-small-size .col=
+span2,.container-small-size .colspan3,.container-small-size .colspan4,.cont=
+ainer-small-size .colspan33,.container-small-size .colspan66,.container-sma=
+ll-size .colspan-n{display:table-cell !important;width:100% !important;}.is=
+-mobile-hidden{display:none !important;}}</style><style data-name=3D"media-=
+custom-max-width-500px" type=3D"text/css">@media screen and (max-width: 500=
+px){body{min-width:0px;}#acr-71231333{margin-left:20px!important;margin-rig=
+ht:20px!important;}#acr-84180742{padding-left:24px!important;padding-right:=
+24px!important;}#acr-46145504{width:100%!important;margin-left:0px!importan=
+t;margin-right:0px!important;padding-left:0px!important;padding-right:0px!i=
+mportant;}#acr-16784499{margin-top:0px!important;margin-bottom:0px!importan=
+t;margin-left:0px!important;margin-right:0px!important;}#acr-60771494 th{di=
+splay:table-cell !important;}#acr-31809700 th{display:table-cell !important=
+;}#acr-92225277 th{display:table-cell !important;}#acr-84660130{padding-top=
+:20px!important;padding-bottom:15px!important;}#acr-27935527{width:100%!imp=
+ortant;}#acr-23367526{height:30px!important;}#acr-94346514{padding-bottom:1=
+5px!important;padding-top:0px!important;}#acr-35785958{font-size:11px!impor=
+tant;}#acr-4728048{font-size:11px!important;}#acr-96144544{font-size:11px!i=
+mportant;}#acr-77078193{font-size:11px!important;}#acr-41123559{font-size:1=
+1px!important;}#acr-36967696{font-size:11px!important;}#acr-2613537{font-si=
+ze:11px!important;}#acr-33170596{font-size:11px!important;}#acr-92695218{fo=
+nt-size:11px!important;}#acr-78043531{font-size:11px!important;}#acr-231519=
+91{font-size:11px!important;}#acr-9408881{margin-bottom:0px!important;}#acr=
+-43045173{width:100%!important;}}</style><style data-name=3D"media-eurail-m=
+ax-width-500px" type=3D"text/css">
+      @media screen and (max-width: 500px){
+        .button-container { 
+          min-width: 0 !important;
+          width: 70%;
+        }
+      }</style><!--[if gte mso 9]><style acrite-mso-css=3D"true">.image-con=
+tainer div {  display: block;}.structure__table td {  padding: 0;  border: =
+none;}.button-container {  border: none !important;  padding: 0 !important;=
+  margin: 0 !important;  line-height: normal !important;}.acr-structure {  =
+margin: 0 !important;}.acr-component {  margin: 0 !important;}.acr-fragment=
+ {  margin: 0 !important;}.colspan1, .colspan2, .colspan3, .colspan4, .cols=
+pan33, .colspan66 {  box-sizing: border-box !important;}</style><![endif]--=
+></head><body class=3D"" id=3D"acr-17225950" style=3D"font-family:undefined=
+;"><span style=3D"display:none !important;visibility:hidden;mso-hide:all;op=
+acity:0;" class=3D"acr-preheader">Are you 18 and waiting to go on the Inter=
+rail trip=3F</span><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" =
+border=3D"0" width=3D"100%"><tr><td style=3D"background-color: rgb(241, 241=
+, 241); font-family: undefined;"><![endif]--><div class=3D"acr-container"><=
+div class=3D"acr-structure" data-structure-id=3D"1-1-column" data-structure=
+-name=3D"richtext.structure_1_1_column"><!--[if mso]><table cellpadding=3D"=
+0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><td style=3D"null"><![=
+endif]--><table class=3D"structure__table" align=3D"center" cellpadding=3D"=
+0" cellspacing=3D"0" border=3D"0" width=3D"600"><tbody><tr><th class=3D"col=
+span1" style=3D"padding:15px 24px;"><div class=3D"acr-fragment acr-componen=
+t" data-component-id=3D"text" style=3D"color:rgb(23, 32, 79);font-family:Po=
+ppins, Arial, sans-serif;font-weight:300;font-size:14px;" data-contentedita=
+ble=3D"false"><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" borde=
+r=3D"0" width=3D"100%"><tr><td style=3D"color: rgb(23, 32, 79); font-family=
+: Poppins, Arial, sans-serif; font-size: 14px;"><![endif]--><div class=3D"t=
+ext-container" data-contenteditable=3D"true"><p style=3D"text-align:center;=
+"><span style=3D"font-size:14px;"><a class=3D"arc-link" data-nl-type=3D"ext=
+ernalLink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6=
+b0d3&e=3DdXRtX2NhbXBhaWduPURFVWNvbS1USElOSy1NYXJjaC0yMDIzLUlSLTEmdXRtX3NvdX=
+JjZT1uZXdzbGV0dGVyJnV0bV9tZWRpdW09ZW1haWwmcDE9QE1rRS1NbVUwR1ZmdFNiQ0psblRTL=
+WlRd2F1OWpEMlU5WFJQcFdQT21wMHlodndyV2Y3V3l5U0lzT0stSkh5NEt4Ykh6c2M1NFJVdVNZ=
+NlFyQUFoX1Z6VndpaXZIVWx4Y0VZc1V2NTNXMGJJczEzTEU&s=3DSUpxouDryWgAB5mg5sM3jYS=
+rfX39utjfhtEStRsnKV0" style=3D"color:rgb(23, 32, 79);text-decoration:none;"=
+ >View in browser</a></span></p></div><!--[if mso]></td></tr></table><![end=
+if]--></div></th></tr></tbody></table><!--[if mso]></td></tr></table><![end=
+if]--></div><div class=3D"acr-structure" data-structure-id=3D"1-1-column" d=
+ata-structure-name=3D"richtext.structure_1_1_column" style=3D""><!--[if mso=
+]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><t=
+r><td style=3D""><![endif]--><table class=3D"structure__table" align=3D"cen=
+ter" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"600"><tbody>=
+<tr><th class=3D"colspan1 mobile-full" style=3D"padding:20px 25px 15px;back=
+ground-color:rgb(255, 255, 255);border-radius:5px 5px 0px 0px;" id=3D"acr-8=
+4660130"><div class=3D"acr-fragment acr-component image-container" data-com=
+ponent-id=3D"image" style=3D"width:100%;text-align:center;" data-contentedi=
+table=3D"false"><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" bor=
+der=3D"0" width=3D"100%"><tr><td style=3D"text-align: center;"><![endif]-->=
+<a class=3D"arc-link" data-nl-type=3D"externalLink" href=3D"https://t.mail.=
+eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0d4" ><img src=3D"http://res.mail=
+.eurail.com/res/eurail_mkt_prod1/cd9b6d2d30df16e80cd9ca9cdf4308d5ec9b5db068=
+858ae5da96d88e79a5ad71.png" style=3D"height:40px;" width=3D"" title=3D"Inte=
+rrail / Eurail Logo" alt=3D"Interrail / Eurail" height=3D"40" class=3D""></=
+a><!--[if mso]></td></tr></table><![endif]--></div></th></tr></tbody></tabl=
+e><!--[if mso]></td></tr></table><![endif]--></div><div class=3D"acr-struct=
+ure" data-structure-id=3D"1-1-column" data-structure-name=3D"richtext.struc=
+ture_1_1_column" style=3D"margin-bottom:20px;" id=3D"acr-9408881"><!--[if m=
+so]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">=
+<tr><td style=3D"text-align: center; padding-bottom: 20px;"><table cellpadd=
+ing=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><td style=3D"">=
+<![endif]--><table class=3D"structure__table" align=3D"center" cellpadding=
+=3D"0" cellspacing=3D"0" border=3D"0" width=3D"600"><tbody><tr><th class=3D=
+"colspan1 mobile-full" style=3D"padding:0px 25px 15px;background-color:rgb(=
+255, 255, 255);border-radius:0px 0px 5px 5px;" id=3D"acr-94346514"><!--[if =
+mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"=
+><tr><td style=3D"border-radius: 0px 0px 5px 5px;"><![endif]--><div class=
+=3D"acr-fragment acr-component" data-component-id=3D"text" style=3D"color:r=
+gb(20, 10, 51);font-family:Poppins, Arial, sans-serif;line-height:24px;font=
+-size:14px;font-weight:300;" data-contenteditable=3D"false"><!--[if mso]><t=
+able cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><t=
+d style=3D"color: rgb(20, 10, 51); font-family: Poppins, Arial, sans-serif;=
+ line-height: 24px; font-size: 14px;"><![endif]--><div class=3D"text-contai=
+ner" data-contenteditable=3D"true"><p style=3D"text-align:center;"><a class=
+=3D"arc-link" data-nl-type=3D"externalLink" href=3D"https://t.mail.eurail.c=
+om/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0d5" style=3D"color:rgb(20, 10, 51);text-=
+decoration:none;" id=3D"acr-35785958" ><span id=3D"acr-4728048">PASSES</spa=
+n></a><span id=3D"acr-96144544">&nbsp;|&nbsp;</span><a class=3D"arc-link" d=
+ata-nl-type=3D"externalLink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb=
+8d10d4,5c66ca0,5c6b0d6" style=3D"color:rgb(20, 10, 51);text-decoration:none=
+;" id=3D"acr-77078193" ><span id=3D"acr-41123559">OFFERS</span></a><span id=
+=3D"acr-36967696">&nbsp;|&nbsp;</span><a class=3D"arc-link" data-nl-type=3D=
+"externalLink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0=
+,5c6b0d7" style=3D"color:rgb(20, 10, 51);text-decoration:none;" id=3D"acr-2=
+613537" ><span id=3D"acr-33170596">PLAN YOUR TRIP</span></a><span id=3D"acr=
+-92695218">&nbsp;|&nbsp;</span><a class=3D"arc-link" data-nl-type=3D"extern=
+alLink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0d=
+8" style=3D"color:rgb(20, 10, 51);text-decoration:none;" id=3D"acr-78043531=
+" ><span id=3D"acr-23151991">RESERVATIONS</span></a></p></div><!--[if mso]>=
+</td></tr></table><![endif]--></div><!--[if mso]></td></tr></table><![endif=
+]--></th></tr></tbody></table><!--[if mso]></td></tr></table></td></tr></ta=
+ble><![endif]--></div><div class=3D"acr-structure" data-structure-id=3D"1-1=
+-column" data-structure-name=3D"richtext.structure_1_1_column" style=3D"bac=
+kground-size:auto;width:100%;background-color:rgb(241, 241, 241);"><!--[if =
+mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"=
+><tr><td style=3D"background-color: rgb(241, 241, 241);"><![endif]--><table=
+ class=3D"structure__table" align=3D"center" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" width=3D"600"><tbody><tr><th class=3D"colspan1" style=
+=3D"background-color:rgb(241, 241, 241);"><!--[if mso]><table cellpadding=
+=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" class=3D"" style=3D"ms=
+o-hide:"><tr><td style=3D"null"><![endif]--><div class=3D"acr-fragment acr-=
+component image-container is-mobile-hidden" data-component-id=3D"image" sty=
+le=3D"width:100%;text-align:center;" data-upload=3D"uploadLoader-1679309286=
+530-695726634" data-contenteditable=3D"false"><!--[if mso]><table cellpaddi=
+ng=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><td style=3D"tex=
+t-align: center; border-radius: 5px 5px 0px 0px;"><![endif]--><a class=3D"a=
+rc-link" data-nl-type=3D"externalLink" href=3D"https://t.mail.eurail.com/r/=
+=3Fid=3Dhb8d10d4,5c66ca0,5c6b0d9" ><img src=3D"http://res.mail.eurail.com/r=
+es/eurail_mkt_prod1/ac461884b02b5da8662d78f358a87dfff7458c15fdd28c17e93cea9=
+4ff3277c6.jpg" style=3D"height:auto;width:100%;border-radius:5px 5px 0px 0p=
+x;" width=3D"600" id=3D"acr-27935527" alt=3D"DISCOVER EUROPE FOR FREE" clas=
+s=3D"mobile-full" height=3D"277"></a><!--[if mso]></td></tr></table><![endi=
+f]--></div><!--[if mso]></td></tr></table><![endif]--><!--[if mso]><table c=
+ellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" class=3D"mso=
+-is-desktop-hidden" style=3D"mso-hide:all"><tr><td style=3D"null"><![endif]=
+--><div class=3D"acr-fragment acr-component image-container is-desktop-hidd=
+en" data-component-id=3D"image" style=3D"width:100%;text-align:center;" dat=
+a-upload=3D"uploadLoader-1679309299110-49550433" data-contenteditable=3D"fa=
+lse"><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" w=
+idth=3D"100%"><tr><td style=3D"text-align: center; border-radius: 5px 5px 0=
+px 0px;"><![endif]--><a class=3D"arc-link" data-nl-type=3D"externalLink" hr=
+ef=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0da" ><img s=
+rc=3D"http://res.mail.eurail.com/res/eurail_mkt_prod1/fdf56562fe3318f95fe5d=
+c13b24e52d3393817481941f5f2a2141cd0ab66f374.jpg" style=3D"height:auto;width=
+:100%;border-radius:5px 5px 0px 0px;" width=3D"600" alt=3D"DISCOVER EUROPE =
+FOR FREE" class=3D"mobile-full" id=3D"acr-43045173" height=3D"360"></a><!--=
+[if mso]></td></tr></table><![endif]--></div><!--[if mso]></td></tr></table=
+><![endif]--></th></tr></tbody></table><!--[if mso]></td></tr></table><![en=
+dif]--></div><div class=3D"acr-structure" data-structure-id=3D"1-1-column" =
+data-structure-name=3D"richtext.structure_1_1_column" style=3D""><!--[if ms=
+o]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><=
+tr><td style=3D"border-radius: 0px;"><![endif]--><table class=3D"structure_=
+_table" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" w=
+idth=3D"600" style=3D"border-radius:0px;"><tbody><tr><th class=3D"colspan1 =
+mobile-full" style=3D"padding:25px;background-color:rgb(20, 10, 51);border-=
+radius:0px 0px 5px 5px;"><!--[if mso]><table cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" width=3D"100%"><tr><td style=3D"border-radius: 0px 0px =
+5px 5px;"><![endif]--><div class=3D"acr-fragment acr-component" data-compon=
+ent-id=3D"text" style=3D"color:rgb(255, 255, 255);font-family:&quot;Poppins=
+&quot;, Roboto, Georgia, serif;" data-contenteditable=3D"false"><!--[if mso=
+]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><t=
+r><td style=3D"color: rgb(255, 255, 255); font-family: 'Poppins', Roboto, G=
+eorgia, serif;"><![endif]--><div class=3D"text-container" data-contentedita=
+ble=3D"true"><p style=3D"text-align:center;"><span style=3D"font-size:30px;=
+font-weight:700;"><a class=3D"arc-link" data-nl-type=3D"externalLink" href=
+=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0db" style=3D"=
+text-decoration:none;color:rgb(255, 255, 255);" >DISCOVER EUROPE FOR FREE</=
+a></span></p></div><!--[if mso]></td></tr></table><![endif]--></div><!--[if=
+ mso]></td></tr></table><![endif]--></th></tr></tbody></table><!--[if mso]>=
+</td></tr></table><![endif]--></div><div class=3D"acr-structure" data-struc=
+ture-id=3D"1-1-column" data-structure-name=3D"richtext.structure_1_1_column=
+" style=3D"margin:20px;" id=3D"acr-71231333"><!--[if mso]><table cellpaddin=
+g=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><td style=3D"text=
+-align: center; padding: 20px;"><table cellpadding=3D"0" cellspacing=3D"0" =
+border=3D"0" width=3D"100%"><tr><td style=3D"null"><![endif]--><table class=
+=3D"structure__table" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" =
+border=3D"0" width=3D"600"><tbody><tr><th class=3D"colspan1" style=3D"borde=
+r:0px none rgb(255, 255, 255);background-color:rgb(255, 255, 255);border-to=
+p-left-radius:6px;border-top-right-radius:6px;border-bottom-right-radius:6p=
+x;border-bottom-left-radius:6px;padding:24px;" id=3D"acr-84180742"><!--[if =
+mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"=
+><tr><td style=3D"border-top-left-radius: 6px; border-top-right-radius: 6px=
+; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px;"><![endi=
+f]--><div class=3D"acr-fragment acr-component" data-component-id=3D"text" s=
+tyle=3D"color:rgb(20, 10, 51);font-family:Poppins, Arial, sans-serif;line-h=
+eight:24px;font-size:16px;font-weight:300;" data-contenteditable=3D"false">=
+<!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=
+=3D"100%"><tr><td style=3D"color: rgb(20, 10, 51); font-family: Poppins, Ar=
+ial, sans-serif; line-height: 24px; font-size: 16px;"><![endif]--><div clas=
+s=3D"text-container" data-contenteditable=3D"true"><p style=3D"text-align:c=
+enter;">Are you 18 and waiting to go on the Interrail trip you&#x2019;ve al=
+ways dreamed of=3F Now&#x2019;s your chance! DiscoverEU is back with <span =
+style=3D"font-weight:bold;"><a class=3D"arc-link" data-nl-type=3D"externalL=
+ink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0dc" =
+style=3D"font-weight:bold;text-decoration:none;color:rgb(0, 0, 51);" >35,00=
+0 free rail passes up for grabs!</a>
+                      </span></p><p style=3D"text-align:center;"><br></p><p=
+ style=3D"text-align:center;">The EU initiative gives young Europeans the o=
+pportunity to discover Europe through learning experiences. All you have to=
+ do is apply by answering a 5-question quiz about the EU as well as a subsi=
+diary question. If you are selected, you will receive a travel pass valid f=
+or up to 30 days to explore Europe between 15 June 2023 and 30 September 20=
+24.
+                    </p><p style=3D"text-align:center;"><br></p><p style=3D=
+"text-align:center;">Note: to be eligible, you need to be a citizen of one =
+of the EU Member States or Iceland, Liechtenstein, North Macedonia, Norway,=
+ Serbia or T&#xFC;rkiye, or legally reside in one of those countries. And y=
+ou need to be born between 1 July 2004 and 30 June 2005.
+                    </p><p style=3D"text-align:center;"><br></p><p style=3D=
+"text-align:center;">Applications will be open <span style=3D"font-weight:b=
+old;">until Wednesday 29 March 2023, 12:00</span>. Don&#x2019;t miss out! V=
+isit the <a class=3D"arc-link" data-nl-type=3D"externalLink" href=3D"https:=
+//t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b0dd" style=3D"font-weigh=
+t:bold;color:rgb(0, 0, 51);" >European Youth Portal</a> to find out more.</=
+p><p style=3D"text-align:center;">
+                    </p><p style=3D"text-align:center;">
+                    </p><p style=3D"text-align:center;">
+                    </p></div><!--[if mso]></td></tr></table><![endif]--></=
+div><!--[if mso]></td></tr></table><![endif]--></th></tr></tbody></table><!=
+--[if mso]></td></tr></table></td></tr></table><![endif]--></div><div class=
+=3D"acr-structure" data-structure-id=3D"1-1-column" data-structure-name=3D"=
+richtext.structure_1_1_column" style=3D"margin:20px;"><!--[if mso]><table c=
+ellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><td styl=
+e=3D"text-align: center; padding: 20px;"><![endif]--><table class=3D"struct=
+ure__table" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"600"><tbody><tr><th class=3D"colspan1"><div class=3D"acr-fragme=
+nt acr-component" data-component-id=3D"button:2" style=3D"width:100%;text-a=
+lign:center;display:block;" id=3D"acr-16784499" data-contenteditable=3D"fal=
+se"><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" wi=
+dth=3D"100%"><tr><td style=3D"text-align: center; padding-top: 0px; padding=
+-bottom: 0px;"><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" widt=
+h=3D"100%"><tr><td style=3D"text-align: center;"><v:roundrect xmlns:v=3D"ur=
+n:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-microsoft-com:office:wo=
+rd" style=3D"height:37.5pt; width:285pt; v-text-anchor:middle;" arcsize=3D"=
+12%" fillcolor=3D"rgb(254, 188, 34)" strokeweight=3D"0pt" strokecolor=3D"rg=
+b(0, 0, 238)"><v:stroke opacity=3D"0" /><v:textbox inset=3D"0,0,0,0"><cente=
+r style=3D"color:rgb(255, 255, 255); font-family:Poppins, Arial, sans-serif=
+; font-size:16px"><![endif]--><a href=3D"https://t.mail.eurail.com/r/=3Fid=
+=3Dhb8d10d4,5c66ca0,5c6b98a" class=3D"arc-link" style=3D"text-decoration:no=
+ne;display:block;position:relative;" data-nl-type=3D"externalLink" ><div cl=
+ass=3D"button-container" style=3D"text-align:center;margin:0px 20px;max-wid=
+th:100%;display:inline-block;border-width:0px;border-style:none;border-radi=
+us:6px;background-color:rgb(254, 188, 34);padding:13px 40px;min-width:300px=
+;font-family:Poppins, Arial, sans-serif;font-weight:400;font-size:16px;line=
+-height:24px;" id=3D"acr-46145504">
+                      <span style=3D"color:rgb(255, 255, 255);" data-conten=
+teditable=3D"true">APPLY NOW</span>
+                    </div>
+                  </a><!--[if mso]></center></v:textbox></v:stroke></v:roun=
+drect></td></tr></table></td></tr></table><![endif]--></div></th></tr></tbo=
+dy></table><!--[if mso]></td></tr></table><![endif]--></div><div class=3D"a=
+cr-structure" data-structure-id=3D"1-1-column" data-structure-name=3D"richt=
+ext.structure_1_1_column" style=3D"background-color:rgb(20, 10, 51);"><!--[=
+if mso]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"10=
+0%"><tr><td style=3D"background-color: rgb(20, 10, 51);"><![endif]--><table=
+ class=3D"structure__table" align=3D"center" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0" width=3D"600"><tbody><tr><th class=3D"colspan1" style=
+=3D"padding:40px 20px 0px;"><div class=3D"acr-fragment acr-component" data-=
+component-id=3D"text" style=3D"color:rgb(255, 255, 255);padding-bottom:0px;=
+padding-top:0px;font-family:Poppins, Arial, sans-serif;font-weight:300;font=
+-size:12px;" data-contenteditable=3D"false"><!--[if mso]><table cellpadding=
+=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><td style=3D"color=
+: rgb(255, 255, 255); padding-bottom: 0px; padding-top: 0px; font-family: P=
+oppins, Arial, sans-serif;"><![endif]--><div class=3D"text-container" data-=
+contenteditable=3D"true"><p style=3D"text-align:center;font-size:12px;"><a =
+class=3D"arc-link" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c6=
+6ca0,5c6b992&e=3DdXRtX2NhbXBhaWduPURFVWNvbS1USElOSy1NYXJjaC0yMDIzLUlSLTEmdX=
+RtX3NvdXJjZT1uZXdzbGV0dGVyJnV0bV9tZWRpdW09ZW1haWwmcDE9JTQwWkwxb20zMFVabjRYV=
+WFTRlF3NzB4MmRMMTFXRnBibVd5Y2hDeHFWVkZRWlZJbUJZSzdUcjVienpNMHV0aEtqeHJZdzFG=
+NXVIdzVkaW16RHdGU2daVDI2WmdGQQ&s=3Ds0HVL2r3nC7vdsHtsCEGxj66egV9OiPIe_EF70Mc=
+Mj8" style=3D"color:rgb(255, 255, 255);text-decoration:none;" _type=3D"opto=
+ut" >Unsubscribe</a>&nbsp; | &nbsp;<a class=3D"arc-link" data-nl-type=3D"ex=
+ternalLink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c=
+6b993&e=3DdXRtX2NhbXBhaWduPURFVWNvbS1USElOSy1NYXJjaC0yMDIzLUlSLTEmdXRtX3Nvd=
+XJjZT1uZXdzbGV0dGVyJnV0bV9tZWRpdW09ZW1haWwmcDE9QE1rRS1NbVUwR1ZmdFNiQ0psblRT=
+LWlRd2F1OWpEMlU5WFJQcFdQT21wMHlodndyV2Y3V3l5U0lzT0stSkh5NEt4Ykh6c2M1NFJVdVN=
+ZNlFyQUFoX1Z6VndpaXZIVWx4Y0VZc1V2NTNXMGJJczEzTEU&s=3DM0esuGOMhtkqTy65GPB0qb=
+k6brDauwHlQ2-hYpaDxMg" style=3D"color:rgb(255, 255, 255);text-decoration:no=
+ne;" >View in browser</a></p></div><!--[if mso]></td></tr></table><![endif]=
+--></div></th></tr></tbody></table><!--[if mso]></td></tr></table><![endif]=
+--></div><div class=3D"acr-structure" data-structure-id=3D"1-1-column" data=
+-structure-name=3D"richtext.structure_1_1_column" style=3D"background-color=
+:rgb(20, 10, 51);"><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"0" =
+border=3D"0" width=3D"100%"><tr><td style=3D"background-color: rgb(20, 10, =
+51);"><![endif]--><table class=3D"structure__table" align=3D"center" cellpa=
+dding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"600"><tbody><tr><th cla=
+ss=3D"colspan1" style=3D"padding:0px 20px 40px;"><div class=3D"acr-fragment=
+ acr-component" data-component-id=3D"text" style=3D"color:rgb(255, 255, 255=
+);padding-bottom:0px;font-family:Poppins, Arial, sans-serif;font-weight:300=
+;font-size:12px;padding-top:24px;" data-contenteditable=3D"false"><!--[if m=
+so]><table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">=
+<tr><td style=3D"color: rgb(255, 255, 255); padding-bottom: 0px; font-famil=
+y: Poppins, Arial, sans-serif; padding-top: 24px;"><![endif]--><div class=
+=3D"text-container" data-contenteditable=3D"true"><p style=3D"text-align:ce=
+nter;font-size:12px;">
+                      <a class=3D"arc-link" data-nl-type=3D"externalLink" h=
+ref=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b994" style=
+=3D"text-decoration:none;color:rgb(255, 255, 255);" ><img src=3D"http://res=
+.mail.eurail.com/res/eurail_mkt_prod1/fef861523f777635f3b299cffd70232c5609c=
+f224dde8c861755d54a33d1c071.png" width=3D"30" style=3D"width:30px;height:au=
+to;display:inline-block;" title=3D"Facebook" alt=3D"Facebook logo"></a>&nbs=
+p;&nbsp;
+                      <a class=3D"arc-link" data-nl-type=3D"externalLink" h=
+ref=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b995" style=
+=3D"text-decoration:none;color:rgb(255, 255, 255);" ><img src=3D"http://res=
+.mail.eurail.com/res/eurail_mkt_prod1/89129fea0e535a9b3e43002e6959a678c8f3c=
+9fee58b30b20b9d4b16a405c5c3.png" width=3D"30" style=3D"width:30px;height:au=
+to;display:inline-block;" title=3D"Facebook" alt=3D"Instagram logo"></a>&nb=
+sp;&nbsp;
+                      <a class=3D"arc-link" data-nl-type=3D"externalLink" h=
+ref=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b996" style=
+=3D"text-decoration:none;color:rgb(255, 255, 255);" ><img src=3D"http://res=
+.mail.eurail.com/res/eurail_mkt_prod1/77f9537f84fefe2faff6eeba9b4195b52b358=
+596d699cbdb022b51d40f57c507.png" width=3D"30" style=3D"width:30px;height:au=
+to;display:inline-block;" title=3D"Facebook" alt=3D"Youtube logo"></a>&nbsp=
+;&nbsp;
+                      <a class=3D"arc-link" data-nl-type=3D"externalLink" h=
+ref=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b997" style=
+=3D"text-decoration:none;color:rgb(255, 255, 255);" ><img src=3D"http://res=
+.mail.eurail.com/res/eurail_mkt_prod1/c083bfcdeedc0db7f9a1a583d1ca689c6d8e5=
+a66cb9f3a822b5a9af62b82f371.png" width=3D"30" style=3D"width:30px;height:au=
+to;display:inline-block;" title=3D"Facebook" alt=3D"Pinterest logo"></a>&nb=
+sp;&nbsp;
+                      <a class=3D"arc-link" data-nl-type=3D"externalLink" h=
+ref=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b998" style=
+=3D"text-decoration:none;color:rgb(255, 255, 255);" ><img src=3D"http://res=
+.mail.eurail.com/res/eurail_mkt_prod1/4d7b542926de77b9addcfbb659c9d3fa9a530=
+3596b8c5f102bcb8dd98bb21e06.png" width=3D"30" style=3D"width:30px;height:au=
+to;display:inline-block;" title=3D"Facebook" alt=3D"Twitter logo"></a>
+                    </p></div><!--[if mso]></td></tr></table><![endif]--></=
+div><div class=3D"acr-fragment acr-component" data-component-id=3D"text" st=
+yle=3D"color:rgb(255, 255, 255);padding-top:24px;padding-bottom:0px;line-he=
+ight:1.5;font-family:Poppins, Arial, sans-serif;font-weight:300;" data-cont=
+enteditable=3D"false"><!--[if mso]><table cellpadding=3D"0" cellspacing=3D"=
+0" border=3D"0" width=3D"100%"><tr><td style=3D"color: rgb(255, 255, 255); =
+padding-top: 24px; padding-bottom: 0px; line-height: 1.5; font-family: Popp=
+ins, Arial, sans-serif;"><![endif]--><div class=3D"text-container" data-con=
+tenteditable=3D"true"><p style=3D"text-align:center;font-size:12px;display:=
+block;"></p><a class=3D"arc-link" data-nl-type=3D"externalLink" href=3D"htt=
+ps://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b999" style=3D"color:r=
+gb(255, 255, 255);text-decoration:none;" ><p style=3D"text-align:center;fon=
+t-size:12px;display:block;">Customer Service</p><p style=3D"text-align:cent=
+er;display:block;font-size:12px;"></p></a><p style=3D"text-align:center;dis=
+play:block;font-size:12px;"><a class=3D"arc-link" data-nl-type=3D"externalL=
+ink" href=3D"https://t.mail.eurail.com/r/=3Fid=3Dhb8d10d4,5c66ca0,5c6b99a" =
+style=3D"color:rgb(255, 255, 255);text-decoration:none;" >interrail.eu</a><=
+/p></div><!--[if mso]></td></tr></table><![endif]--></div><div class=3D"acr=
+-fragment acr-component" data-component-id=3D"text" style=3D"color:rgb(255,=
+ 255, 255);padding-top:24px;padding-bottom:0px;font-family:Poppins, Arial, =
+sans-serif;font-weight:300;" data-contenteditable=3D"false"><!--[if mso]><t=
+able cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%"><tr><t=
+d style=3D"color: rgb(255, 255, 255); padding-top: 24px; padding-bottom: 0p=
+x; font-family: Poppins, Arial, sans-serif;"><![endif]--><div class=3D"text=
+-container" data-contenteditable=3D"true"><p style=3D"text-align:center;"><=
+span style=3D"font-size:12px;">P.O. Box 2338, 3500 Utrecht, The Netherlands=
+</span><br></p></div><!--[if mso]></td></tr></table><![endif]--></div></th>=
+</tr></tbody></table><!--[if mso]></td></tr></table><![endif]--></div></div=
+><!--[if mso]></td></tr></table><![endif]-->
+<img height=3D'0' width=3D'0' alt=3D'' src=3D'https://t.mail.eurail.com/r/=
+=3Fid=3Dhb8d10d4,5c66ca0,1'/>
+</body></html>
+
+------=_NextPart_827_E8B6CA02.E8B6CA02--
+
