@@ -1,9 +1,9 @@
-scikit-learn~=1.2.1
-matplotlib~=3.6.3
-numpy~=1.24.2
-pandas~=1.5.3
-sklearn~=0.0
-scipy~=1.10.0
+scikit-learn
+matplotlib
+numpy
+pandas
+sklearn
+scipy
 nltk
 beautifulsoup4
 requests
@@ -14,3 +14,8 @@ docx2txt
 html5lib
 spacy
 PyPDF2
+python-dotenv
+tweepy
+pyaudio
+speechRecognition
+pyttsx3
