@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 HandsOnMachineLearningProjects/A7_DimensionalityReduction/files/my_mnist.mmap
+HandsOnMachineLearningProjects/A9_BasicNeuralNetworks/Fine-Tunning/kt_tunner_info

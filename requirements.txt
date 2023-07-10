@@ -1,10 +1,10 @@
-scikit-learn
-matplotlib
-numpy
-pandas
-sklearn
-scipy
-nltk
+scikit-learn==1.3.0
+matplotlib==3.7.2
+numpy==1.24.3
+pandas==2.0.3
+sklearn==0.0.post5
+scipy==1.11.1
+nltk==3.8.1
 beautifulsoup4
 requests
 seaborn
@@ -18,4 +18,7 @@ python-dotenv
 tweepy
 pyaudio
 speechRecognition
-pyttsx3
+pyttsx3==2.90
+keras_tuner==1.3.5
+keras==2.13.1
+tensorflow==2.13.0
