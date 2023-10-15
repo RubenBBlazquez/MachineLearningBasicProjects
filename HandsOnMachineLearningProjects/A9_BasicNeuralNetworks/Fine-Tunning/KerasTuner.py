@@ -40,17 +40,25 @@ class MyClassificationHyperModel(HyperModel):
         x, y = args
 
         if hp.Boolean("normalizer"):
-            norm_layer = tf.keras.layers.Normalization
+            norm_layer = tf.keras.layers.Normalization()
             x = norm_layer(x)
 
         return model.fit(x, y, **kwargs)
 
 
 # after we define the class, we can use it with a hyper_band_tunner
-def get_hyper_band_tunner():
+def get_random_hyper_band_tunner():
     return kt.Hyperband(
         MyClassificationHyperModel(), objective='val_accuracy', seed=42, max_epochs=10,
-        factor=3, hyperband_iterations=3, overwrite=True, directory='kt_tunner_info', project_name='hyperband'
+        factor=3, hyperband_iterations=2, overwrite=True, directory='kt_tunner_info', project_name='hyperband'
+    )
+
+
+def get_bayesian_hyper_band_tunner():
+    return kt.BayesianOptimization(
+        MyClassificationHyperModel(), objective='val_accuracy', seed=42, max_trials=10,
+        alpha=1e-4, beta=2.6,
+        overwrite=True, directory='kt_tunner_info', project_name='bayesian_tunner'
     )
 
 
@@ -85,5 +93,22 @@ if __name__ == '__main__':
     print(best_trial.summary())
     print('-------------------------------------------------')
 
-    my_tune_model = get_hyper_band_tunner()
+    # this method will train many models and selecting the best model
+    my_tune_model = get_random_hyper_band_tunner()
     my_tune_model.search(x_train, y_train, epochs=10, validation_data=(x_valid, y_valid))
+    best_random_tune_model = my_tune_model.get_best_models(1)
+
+    # one thing to know if that HyperBand is smarter than pure random search in the way it allocates resources
+    # Keras Tunner also includes a kt.BayesianOptimization tuner:
+    # this algorithm gradually learns which region of the hyperparameters space are most promising
+    # by fitting a probabilistic model called a Gaussian Process. This allows it to gradually zoom in on the best
+    # hyperparameters.
+    # The downside is that the algorithm has its own hyperparameters:
+    # -> alpha, represents the level of noise you expect in the performance measures across trials (its default to 10-4)
+    # -> beta, specifies how much you want the algorithm to explore, instead of simply exploiting the known good regions
+    # of hyperparameters space (its default to 2.6)
+
+    my_bayesian_tune_model = get_bayesian_hyper_band_tunner()
+    my_bayesian_tune_model.search(x_train, y_train, epochs=10, validation_data=(x_valid, y_valid))
+    best_bayesian_model = my_tune_model.get_best_models(1)
+
