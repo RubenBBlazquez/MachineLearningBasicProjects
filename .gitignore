@@ -130,3 +130,4 @@ dmypy.json
 
 HandsOnMachineLearningProjects/A7_DimensionalityReduction/files/my_mnist.mmap
 HandsOnMachineLearningProjects/A9_BasicNeuralNetworks/Fine-Tunning/kt_tunner_info
+HandsOnMachineLearningProjects/A9_BasicNeuralNetworks/Fine-Tunning/train_images_transfer_learning/*
